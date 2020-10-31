@@ -40,17 +40,22 @@ def extract_from_uri(uri):
 
 def get_file_blob(bucket_name, file_name):
     """ Gets a blob from a file in a given bucket
+    Once the blob is obtained you can download as appropriate, e.g.,
+      blob.download_as_text(client=None)
+      blolb.download_as_bytes(client=None)
+      
+      See https://googleapis.dev/python/storage/latest/blobs.html
     
     Args:
-      bucket_name (str): the 
-    
+      bucket_name (str): the name of the bucket where the file sits 
+      file_name (str): the object name of the blob 
     Return:
       returns the requested blob, or None if there was an error
     
     """
     try:
         storage_client = storage.Client()
-        # Download the file to a destination
+        # Get the blob from the bucket
         bucket = storage_client.get_bucket(bucket_name)
         blob = bucket.blob(file_name)
         return blob
@@ -61,7 +66,6 @@ def get_file_blob(bucket_name, file_name):
 
 def get_json_file(bucket_name, file_name):
     """ Gets a JSON file from Google Cloud Storage Bucket
-    
     Args:
       bucket_name (str): the name of the bucket where the file sits
       file_name (str): the object name of the JSON file 
@@ -72,8 +76,8 @@ def get_json_file(bucket_name, file_name):
     if blob is None:
         print("Could not access JSON file, check it is uploaded and you have permission")
         return None    
-    # Download the contents of the blob as a string and then parse it using json.loads() method
-    json_file = json.loads(blob.download_as_string(client=None))
+    # Download the contents of the blob as bytes and then parse it using json.loads() method
+    json_file = json.loads(blob.download_as_bytes(client=None))
     if json_file is None:
         print("Could not read JSON file, check it is in the correct format")
         return None
