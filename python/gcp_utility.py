@@ -32,6 +32,13 @@ import time
 ######## GCS Functions
 
 def extract_from_uri(uri):
+    """ split a ur into a bucket_id and object_id
+    Args:
+       url (str): uri reference to a file in GCS
+    
+    Returns:
+        bucket_id, object_id
+    """
     uri_s = uri[5:]
     parts = uri_s.split('/',1)
     return parts[0], parts[1]
