@@ -13,9 +13,9 @@ Triggered by a Pub/Sub topic, which should have a JSON string as its message
 of the following form:
 
    {
-    "source_file_name":"file",
+    "source_file_name":"file_$DATEISO",
     "bucket_name":"bucket", 
-    "destination_blob_name":"destination_file",
+    "destination_blob_name":"destination_file_$DATEISO",
     "datediff":6
     }
 
@@ -28,8 +28,9 @@ The function deals with files that contain a changing date stamp, e.g., a daily 
 file that has todats date as part of its title. In this case the date can be substituted
 in the source-file_name with pattern $DATEISO. This name patter is observed it is replaced
 with the date in ISO format. $DATEDIFF will replace it by a date x days agao, where x is 
-given by datediff (supplied in the pub/sub message).The date can also be passed on to the 
-destination file name.
+given by datediff (supplied in the pub/sub message).
+
+The date can also be included in the destination file name, so the title can be datestamped.
 
 """
 
