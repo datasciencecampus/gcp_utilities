@@ -24,6 +24,7 @@ Interacts with a number of Cloud Native Functions, including:
 from google.cloud import storage
 from google.cloud import bigquery
 from google.cloud import pubsub_v1
+from google.cloud import firestore
 import json
 import time
 
