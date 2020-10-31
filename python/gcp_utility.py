@@ -204,20 +204,7 @@ def ingest_dataframe_to_bigquery(project_id, dataset_id, table_id, write_type, s
     job_config = bigquery.LoadJobConfig(
         # Specify a (partial) schema. All columns are always written to the
         # table. The schema is used to assist in data type definitions.
-        schema=[
-            # Specify the type of columns whose type cannot be auto-detected. For
-            # example text columns uses pandas dtype "object", so its
-            # data type is ambiguous.
-            bigquery.SchemaField("country", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("rank", bigquery.enums.SqlTypeNames.INTEGER),
-            bigquery.SchemaField("date1", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("date2", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("date3", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("date4", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("date5", bigquery.enums.SqlTypeNames.STRING),
-            bigquery.SchemaField("metric", bigquery.enums.SqlTypeNames.STRING)
-            
-        ],
+        schema=schema,
         # Optionally, set the write disposition. BigQuery appends loaded rows
         # to an existing table by default, but with WRITE_TRUNCATE write
         # disposition it replaces the table with the loaded data, creating it if it doesnt exist.
