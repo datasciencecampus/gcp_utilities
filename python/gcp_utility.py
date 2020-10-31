@@ -96,8 +96,8 @@ def upload_to_bucket(bucket_name, destination_blob_name, text, content_type='tex
     """Uploads the given text to GC Storage as a given file type
 
     Args:
-        bucket_name (str): name of bucket 
-        destination_blob_name (str): name of the file once uploaded
+        bucket_name (str): name of bucket, e.g., 'bucket-name'
+        destination_blob_name (str): name of the file once uploaded, e.g., 'subfolder/filename.csv'
         text (str): the data for the file 
         content_type(str): the file type, defaults to text/csv
     Returns:
