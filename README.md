@@ -9,7 +9,7 @@ The code in [gcp_utility.py](/blob/main/python/gcp_utility.py) includes function
 - [Pub/Sub](https://cloud.google.com/pubsub)
 - [FireStore](https://cloud.google.com/firestore)
 
-This Python code builds on the https://github.com/googleapis/google-api-python-client library, but wraps some common functions for easier error handling and logging to StackDriver. This can make developing and working wih Cloud Functions much easier. Examples of using these can be found in the [cloud functions](blob/main/python/cloud_functions) example
+This Python code builds on the https://github.com/googleapis/google-api-python-client library, but wraps some common functions for easier error handling and logging to StackDriver. This can make developing and working wih Cloud Functions much easier. Examples of using these can be found in the [cloud functions](/blob/main/python/cloud_functions) example. There is also an example of [streaming large files to Google Cloud Storage](/blob/main/python/gcp_streaming_to_gcs.py)
 
 
 ## node
