@@ -45,7 +45,7 @@ def extract_from_uri(uri):
     return parts[0], parts[1]
 
 
-def get_file_blob(bucket_name, file_name):
+def get_file_blob_from_gcs(bucket_name, blob_name):
     """ Gets a blob from a file in a given bucket
     Once the blob is obtained you can download as appropriate, e.g.,
       blob.download_as_text(client=None)
@@ -55,7 +55,7 @@ def get_file_blob(bucket_name, file_name):
     
     Args:
       bucket_name (str): the name of the bucket where the file sits 
-      file_name (str): the object name of the blob 
+      blob_name (str): the object name of the blob 
     Return:
       returns the requested blob, or None if there was an error
     
@@ -64,22 +64,22 @@ def get_file_blob(bucket_name, file_name):
         storage_client = storage.Client()
         # Get the blob from the bucket
         bucket = storage_client.get_bucket(bucket_name)
-        blob = bucket.blob(file_name)
+        blob = bucket.blob(blob_name)
         return blob
     except Exception as e:
-        print("Error getting file {}/{}, Error Message {}".format(bucket_name, file_name, e))
+        print("Error getting file {}/{}, Error Message {}".format(bucket_name, blob_name, e))
         return None
 
 
-def get_json_file(bucket_name, file_name):
+def get_json_blob_from_gcs(bucket_name, blob_name):
     """ Gets a JSON file from Google Cloud Storage Bucket
     Args:
       bucket_name (str): the name of the bucket where the file sits
-      file_name (str): the object name of the JSON file 
+      blob_name (str): the object name of the JSON file 
      Returns:
         The contents of the JSON file 
     """
-    blob = get_file_blob(bucket_name, file_name)
+    blob = get_file_blob(bucket_name, blob_name)
     if blob is None:
         print("Could not access JSON file, check it is uploaded and you have permission")
         return None    
@@ -93,7 +93,7 @@ def get_json_file(bucket_name, file_name):
         return json_file
 
 
-def upload_to_bucket(bucket_name, destination_blob_name, text, content_type='text/csv'):
+def upload_to_gcs_bucket(bucket_name, destination_blob_name, text, content_type='text/csv'):
     """Uploads the given text to GC Storage as a given file type
 
     Args:
@@ -130,6 +130,32 @@ def upload_to_bucket(bucket_name, destination_blob_name, text, content_type='tex
             print(e)
             return None    
 
+def delete_gcs_object(bucket_name, blob_name):
+    """Deletes a object blob from the bucket."""
+    storage_client = storage.Client()
+
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(object_name)
+    blob.delete()
+
+    print(f"Blob {bucket_name}/{object_name} deleted.")
+
+
+def move_gcs_object(bucket_name, object_name, destination_bucket_name, destination_object_name):
+    """Moves a object blob from a bucket to a given location."""
+    storage_client = storage.Client()
+
+    # Reference to buckets
+    source_bucket = storage_client.bucket(bucket_name)
+    destination_bucket = storage_client.bucket(destination_bucket_name)
+    
+    # Get the original object blob
+    source_blob = source_bucket.blob(object_name)
+
+    # copy to new destination
+    new_blob = source_bucket.copy_blob(source_blob, destination_bucket, destination_object_name)
+
+    print(f"Blob {bucket_name}/{object_name} moved to {destination_bucket_name}/{destination_object_name}.")
            
 #############################################################################
 ######## Pub/Sub Functions
