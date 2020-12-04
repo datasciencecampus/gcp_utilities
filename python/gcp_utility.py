@@ -53,6 +53,16 @@ def get_file_blob_from_gcs(bucket_name, blob_name):
       
       See https://googleapis.dev/python/storage/latest/blobs.html
     
+     If you want to load a csv file to a Pandas dataframe then :
+     import io
+     import pandas as pd
+     from google.cloud import storage
+     
+     blob = get_file_blob_from_gcs(bucket_name, blob_name)
+     csv_contents = blob.download_as_text()
+     df = pd.read_csv(io.StringIO(csv_contents))
+     
+     
     Args:
       bucket_name (str): the name of the bucket where the file sits 
       blob_name (str): the object name of the blob 
