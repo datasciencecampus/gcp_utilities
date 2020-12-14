@@ -151,8 +151,8 @@ def delete_gcs_object(bucket_name, blob_name):
     print(f"Blob {bucket_name}/{object_name} deleted.")
 
 
-def move_gcs_object(bucket_name, object_name, destination_bucket_name, destination_object_name):
-    """Moves a object blob from a bucket to a given location."""
+def copy_gcs_object(bucket_name, object_name, destination_bucket_name, destination_object_name):
+    """Copies an object blob from a bucket to another bucket location"""
     storage_client = storage.Client()
 
     # Reference to buckets
